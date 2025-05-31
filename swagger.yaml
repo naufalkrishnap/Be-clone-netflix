@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Netflix Clone API Project
+  description: Netflix Api Express MongoDb Database
+paths:
+  /my-movies/{email}/{token}:
+    get:
+      summary: Get user's favorite movies
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Favorite movies retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      description: List of favorite movies
+
+  /my-movies:
+    post:
+      summary: Add a movie to favorite movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  description: Movie data to add to favorites
+      responses:
+        201:
+          description: Movie added to favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      description: Updated list of favorite movies
+
+    delete:
+      summary: Remove a movie from favorite movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                moviesId:
+                  type: string
+                  description: ID of the movie to remove
+      responses:
+        204:
+          description: Movie removed from favorites
+
+  /my-token:
+    post:      
+      summary: Sign in and save user token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                token:
+                  type: string
+                  description: Token to associate with the user
+      responses:
+        200:
+          description: Sign-in successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    delete:
+      summary: Sign out and remove user token
+      responses:
+        204:
+          description: Sign-out successful
+
+  /sign-up:
+    post:
+      summary: Sign up a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User's email
+                password:
+                  type: string
+                  description: User's password
+      responses:
+        201:
+          description: User signed up successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: string
+                    description: User ID of the newly created user
